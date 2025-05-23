@@ -4,37 +4,52 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
-const EMAIL_USER = 'contato@l009.com.br';
-const EMAIL_PASS = process.env.EMAIL_PASS;
-const SMTP_HOST = '1234';
-const SMTP_PORT = 465;
-const SMTP_SECURE = true;
+const PORT = process.env.PORT || 3000;
+
+const DEFAULT_EMAIL_USER = 'contato@l009.com.br';
+const DEFAULT_EMAIL_PASS = process.env.EMAIL_PASS;
+const DEFAULT_SMTP_HOST = 'teste.smtp.com';
+const DEFAULT_SMTP_PORT = 465;
+const DEFAULT_SMTP_SECURE = true;
 
 app.use(cors());
 app.use(express.json());
 
-app.post('/sendmail', async (req, res) => {
+app.post('/', async (req, res) => {
     const {
         Brand,
         To,
         Subject,
         Message,
-        HTML_ENABLED = false
+        html = true,
+        smtp,
+        port,
+        email,
+        password
     } = req.body;
 
     if (!Brand || !To || !Subject || !Message) {
-        return res.status(400).json({ success: false, message: 'Todos os parâmetros (Brand, To, Subject, Message) são obrigatórios.' });
+        return res.status(400).json({ success: false, message: 'All parameters (Brand, To, Subject, Message) are required.' });
+    }
+
+    const currentEmailUser = email || DEFAULT_EMAIL_USER;
+    const currentEmailPass = password || DEFAULT_EMAIL_PASS;
+    const currentSmtpHost = smtp || DEFAULT_SMTP_HOST;
+    const currentSmtpPort = port || DEFAULT_SMTP_PORT;
+    const currentSmtpSecure = typeof port !== 'undefined' ? (port === 465) : DEFAULT_SMTP_SECURE;
+
+    if (!currentEmailPass) {
+        return res.status(500).json({ success: false, message: 'Server configuration error: Email password not set.' });
     }
 
     try {
         const transporter = nodemailer.createTransport({
-            host: SMTP_HOST,
-            port: SMTP_PORT,
-            secure: SMTP_SECURE,
+            host: currentSmtpHost,
+            port: currentSmtpPort,
+            secure: currentSmtpSecure,
             auth: {
-                user: EMAIL_USER,
-                pass: EMAIL_PASS
+                user: currentEmailUser,
+                pass: currentEmailPass
             }
         });
 
@@ -45,7 +60,7 @@ app.post('/sendmail', async (req, res) => {
             bcc: `${To}, contato@l009.com.br`
         };
 
-        if (HTML_ENABLED) {
+        if (html) {
             mailOptions.html = Message;
         } else {
             mailOptions.text = Message;
@@ -53,15 +68,14 @@ app.post('/sendmail', async (req, res) => {
 
         const info = await transporter.sendMail(mailOptions);
 
-        console.log('E-mail enviado: %s', info.messageId);
-        res.status(200).json({ success: true, message: 'E-mail enviado com sucesso!', messageId: info.messageId });
-
+        console.log('Email sent: %s', info.messageId);
+        res.status(200).json({ success: true, message: 'Email sent successfully!', messageId: info.messageId });
     } catch (error) {
-        console.error('Erro ao enviar e-mail:', error);
-        res.status(500).json({ success: false, message: 'Erro ao enviar e-mail.', error: error.message });
+        console.error('Error sending email:', error);
+        res.status(500).json({ success: false, message: 'Error sending email.', error: error.message });
     }
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor de envio de e-mails rodando na porta ${PORT}.`);
+    console.log(`Email sending server running on port ${PORT}.`);
 });
