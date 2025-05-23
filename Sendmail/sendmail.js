@@ -9,7 +9,7 @@ const EMAIL_USER = 'contato@l009.com.br';
 const EMAIL_PASS = process.env.EMAIL_PASS;
 const SMTP_HOST = '1234';
 const SMTP_PORT = 465;
-const SMTP_SECURE = process.env.SMTP_SECURE === 'true' ? true : false;
+const SMTP_SECURE = true;
 
 app.use(cors());
 app.use(express.json());
