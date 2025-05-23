@@ -12,7 +12,7 @@ async function sendmail() {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/', {
+        const response = await fetch('https://l009-api-sendmail-railway.up.railway.app/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
