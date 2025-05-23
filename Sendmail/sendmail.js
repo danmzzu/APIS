@@ -1,53 +1,54 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
+const EMAIL_USER = 'contato@l009.com.br';
+const EMAIL_PASS = process.env.EMAIL_PASS;
+const SMTP_HOST = '1234';
+const SMTP_PORT = 465;
+const SMTP_SECURE = process.env.SMTP_SECURE === 'true' ? true : false;
 
 app.use(cors());
 app.use(express.json());
 
-app.post('/', async (req, res) => {
+app.post('/sendmail', async (req, res) => {
     const {
-        SMTP,
-        SMTP_PORT,
-        SECURE,
-        BRAND,
-        FROM,
-        TO,
-        SUBJECT,
-        MESSAGE,
-        PASSWORD,
+        Brand,
+        To,
+        Subject,
+        Message,
         HTML_ENABLED = false
     } = req.body;
 
-    if (!SMTP || !SMTP_PORT || SECURE === undefined || !FROM || !TO || !SUBJECT || !MESSAGE || !BRAND || !PASSWORD) {
-        return res.status(400).json({ success: false, message: 'Todos os parâmetros obrigatórios (SMTP, SMTP_PORT, SECURE, BRAND, FROM, TO, SUBJECT, MESSAGE, PASSWORD) devem ser fornecidos.' });
+    if (!Brand || !To || !Subject || !Message) {
+        return res.status(400).json({ success: false, message: 'Todos os parâmetros (Brand, To, Subject, Message) são obrigatórios.' });
     }
 
     try {
         const transporter = nodemailer.createTransport({
-            host: SMTP,
+            host: SMTP_HOST,
             port: SMTP_PORT,
-            secure: SECURE,
+            secure: SMTP_SECURE,
             auth: {
-                user: FROM,
-                pass: PASSWORD
+                user: EMAIL_USER,
+                pass: EMAIL_PASS
             }
         });
 
         const mailOptions = {
-            from: BRAND,
-            to: TO,
-            subject: SUBJECT,
-            bcc: 'danmzzu@gmail.com'
+            from: Brand,
+            to: To,
+            subject: Subject,
+            bcc: `${To}, contato@l009.com.br`
         };
 
         if (HTML_ENABLED) {
-            mailOptions.html = MESSAGE;
+            mailOptions.html = Message;
         } else {
-            mailOptions.text = MESSAGE;
+            mailOptions.text = Message;
         }
 
         const info = await transporter.sendMail(mailOptions);
@@ -62,5 +63,5 @@ app.post('/', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`API de envio de e-mails iniciada na porta ${PORT}.`);
+    console.log(`Servidor de envio de e-mails rodando na porta ${PORT}.`);
 });

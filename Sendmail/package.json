@@ -1,9 +1,9 @@
 {
   "name": "sendmail",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "sendmail.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node sendmail.js"
   },
   "keywords": [],
   "author": "",
