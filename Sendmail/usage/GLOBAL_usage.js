@@ -23,10 +23,10 @@ async function sendmail() {
         const data = await response.json();
 
         if (response.ok) {
-            console.log('Email Padrão Enviado com Sucesso');
+            console.log('Email Enviado com Sucesso');
             console.log('Sucesso:', data.message);
         } else {
-            console.error('Erro ao Enviar Email Padrão');
+            console.error('Erro ao Enviar Email');
             console.log('Erro:', data.error);
         }
     } catch (error) {
