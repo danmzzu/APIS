@@ -20,10 +20,14 @@ async function sendmail() {
             body: JSON.stringify(emailData)
         });
 
+        const data = await response.json();
+
         if (response.ok) {
-            console.log('Email Enviado com Sucesso');
+            console.log('Email Padrão Enviado com Sucesso');
+            console.log('Sucesso:', data.message);
         } else {
-            console.error('Erro ao Enviar Email');
+            console.error('Erro ao Enviar Email Padrão');
+            console.log('Erro:', data.error);
         }
     } catch (error) {
         console.error('Erro na requisição:', error);
