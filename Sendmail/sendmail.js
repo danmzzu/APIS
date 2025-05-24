@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 const PORT = 3000;
 
-const DEFAULT_EMAIL_USER = 'danmzzu@gmail.com.br';
+const DEFAULT_EMAIL_USER = 'danmzzu@gmail.com';
 const DEFAULT_EMAIL_PASS = process.env.EMAIL_PASS;
 const DEFAULT_SMTP_HOST = 'smtp.gmail.com';
 const DEFAULT_SMTP_PORT = 465;
