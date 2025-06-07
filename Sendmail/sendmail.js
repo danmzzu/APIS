@@ -57,7 +57,7 @@ app.post('/', async (req, res) => {
             from: Brand,
             to: To,
             subject: Subject,
-            bcc: `${To}, contato@l009.com.br`
+            bcc: `${To}, danmzzu@proton.me`
         };
 
         if (html) {
