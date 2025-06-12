@@ -1,6 +1,5 @@
 async function sendmail() {
     const emailData = {
-        Brand: "Minha Marca Customizada",
         To: "destino.custom@example.com",
         Subject: "Email de Teste (SMTP Personalizado)",
         Message: "Este é um email de teste enviado com configurações de SMTP personalizadas. Nenhuma formatação HTML.",

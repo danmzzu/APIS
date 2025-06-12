@@ -1,6 +1,5 @@
 async function sendmail() {
     const emailData = {
-        Brand: "L009",
         To: "maria@example.com",
         Subject: "L009 - Notificação",
         Message: "<p>Este é um <strong>email de teste</strong> enviado com as configurações padrão da API (L009).</p>",

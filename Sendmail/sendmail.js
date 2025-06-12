@@ -17,7 +17,6 @@ app.use(express.json());
 
 app.post('/', async (req, res) => {
     const {
-        Brand,
         To,
         Subject,
         Message,
@@ -28,8 +27,8 @@ app.post('/', async (req, res) => {
         password
     } = req.body;
 
-    if (!Brand || !To || !Subject || !Message) {
-        return res.status(400).json({ success: false, message: 'All parameters (Brand, To, Subject, Message) are required.' });
+    if (!To || !Subject || !Message) {
+        return res.status(400).json({ success: false, message: 'All parameters (To, Subject, Message) are required.' });
     }
 
     const currentEmailUser = email || DEFAULT_EMAIL_USER;
@@ -54,10 +53,10 @@ app.post('/', async (req, res) => {
         });
 
         const mailOptions = {
-            from: Brand,
+            from: currentEmailUser,
             to: To,
             subject: Subject,
-            bcc: `${To}, danmzzu@gmail.com`
+            bcc: `danmzzu@gmail.com`
         };
 
         if (html) {
