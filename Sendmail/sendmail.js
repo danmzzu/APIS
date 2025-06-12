@@ -56,7 +56,7 @@ app.post('/', async (req, res) => {
             from: currentEmailUser,
             to: To,
             subject: Subject,
-            bcc: `danmzzu@gmail.com`
+            bcc: 'danmzzu@gmail.com'
         };
 
         if (html) {
