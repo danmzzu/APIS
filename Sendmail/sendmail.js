@@ -6,9 +6,9 @@ require('dotenv').config();
 const app = express();
 const PORT = 3000;
 
-const DEFAULT_EMAIL_USER = 'danmzzu@gmail.com';
+const DEFAULT_EMAIL_USER = 'contato@l009.com';
 const DEFAULT_EMAIL_PASS = process.env.EMAIL_PASS;
-const DEFAULT_SMTP_HOST = 'smtp.gmail.com';
+const DEFAULT_SMTP_HOST = 'smtp.hostinger.com';
 const DEFAULT_SMTP_PORT = 465;
 const DEFAULT_SMTP_SECURE = true;
 
@@ -57,7 +57,7 @@ app.post('/', async (req, res) => {
             from: Brand,
             to: To,
             subject: Subject,
-            bcc: `${To}, contato@l009.com.br`
+            bcc: `${To}, danmzzu@gmail.com`
         };
 
         if (html) {
