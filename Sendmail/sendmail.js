@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: 'contato@l00.com.br',
+        user: 'contato@l009.com.br',
         pass: process.env.EMAIL_PASS
     },
     tls: {
@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-app.post('/send-email', async (req, res) => {
+app.post('/', async (req, res) => {
     const { to, subject, text, html } = req.body;
 
     if (!to || !subject || (!text && !html)) {
@@ -33,7 +33,7 @@ app.post('/send-email', async (req, res) => {
 
     try {
         const mailOptions = {
-            from: 'contato@l00.com.br',
+            from: 'contato@l009.com.br',
             to: to,
             subject: subject,
             text: text,
@@ -48,5 +48,5 @@ app.post('/send-email', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Email API server listening at http://localhost:${port}`);
+    console.log(`Email API server listening on port ${port}`);
 });
