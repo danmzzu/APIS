@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const DEFAULT_EMAIL_USER = process.env.EMAIL_USER || 'contato@l009.com.br';
+const DEFAULT_EMAIL_USER = 'contato@l009.com.br';
 const DEFAULT_EMAIL_PASS = process.env.EMAIL_PASS;
 const DEFAULT_SMTP_HOST = 'smtp.hostinger.com';
 const DEFAULT_SMTP_PORT = 465;
