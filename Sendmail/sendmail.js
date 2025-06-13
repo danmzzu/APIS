@@ -48,5 +48,5 @@ app.post('/', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Email API server listening on port ${port}`);
+    console.log(`Api rodando na porta: ${port}`);
 });
