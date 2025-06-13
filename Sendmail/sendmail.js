@@ -28,7 +28,7 @@ app.post('/', async (req, res) => {
     const { to, subject, text, html } = req.body;
 
     if (!to || !subject || (!text && !html)) {
-        return res.status(400).json({ error: 'Missing required email fields (to, subject, text or html).' });
+        return res.status(400).json({ error: 'Todos os parâmetros são obrigatórios (to, subject, text or html).' });
     }
 
     try {
@@ -41,9 +41,9 @@ app.post('/', async (req, res) => {
         };
 
         const info = await transporter.sendMail(mailOptions);
-        res.status(200).json({ message: 'Email sent successfully!', messageId: info.messageId });
+        res.status(200).json({ message: 'E-mail enviado com sucesso!', messageId: info.messageId });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to send email.', details: error.message });
+        res.status(500).json({ error: 'Falha no envio do e-mail.', details: error.message });
     }
 });
 
